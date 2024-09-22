@@ -1,4 +1,5 @@
 ﻿using DPA.Store.DOMAIN.Core.Entities;
+using DPA.Store.DOMAIN.Core.Interfaces;
 using DPA.Store.DOMAIN.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DPA.Store.DOMAIN.Infrastructure.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly StoreDbContext _dbContext;
 
