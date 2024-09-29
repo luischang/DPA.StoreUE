@@ -1,4 +1,5 @@
 using DPA.Store.DOMAIN.Core.Interfaces;
+using DPA.Store.DOMAIN.Core.Services;
 using DPA.Store.DOMAIN.Infrastructure.Data;
 using DPA.Store.DOMAIN.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ builder.Services
     (options => options.UseSqlServer(cnx));
 
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

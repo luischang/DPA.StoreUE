@@ -1,4 +1,5 @@
-﻿using DPA.Store.DOMAIN.Core.Entities;
+﻿using DPA.Store.DOMAIN.Core.DTO;
+using DPA.Store.DOMAIN.Core.Entities;
 using DPA.Store.DOMAIN.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,41 +10,43 @@ namespace DPA.Store.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryRepository _categoryRepository;
+        //private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        //public CategoryController(ICategoryRepository categoryRepository)
+        public CategoryController(ICategoryService categoryService)
         {
-            _categoryRepository = categoryRepository;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var categories = await _categoryRepository.GetCategories();
+            var categories = await _categoryService.GetCategories();
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            var category = await _categoryRepository.GetCategoryById(id);
+            var category = await _categoryService.GetCategoryById(id);
             if(category == null) return NotFound();
             return Ok(category);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Category category)
+        public async Task<IActionResult> Create([FromBody] CategoryDescriptionDTO categoryDTO)
         {
-            int id = await _categoryRepository.Insert(category);
+            int id = await _categoryService.Insert(categoryDTO);
             return Ok(id);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute]int id, [FromBody] Category category)
+        public async Task<IActionResult> Update([FromRoute]int id, [FromBody] CategoryListDTO categoryListDTO)
         {
-            if(id != category.Id) return BadRequest();
+            if(id != categoryListDTO.Id) return BadRequest();
 
-            var result = await _categoryRepository.Update(category);
+            var result = await _categoryService.Update(categoryListDTO);
             if(!result) return BadRequest();
             return Ok(result);
         }
@@ -51,7 +54,7 @@ namespace DPA.Store.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var result = await _categoryRepository.Delete(id);
+            var result = await _categoryService.Delete(id);
             if(!result) return BadRequest();
             return Ok(result);
         }
