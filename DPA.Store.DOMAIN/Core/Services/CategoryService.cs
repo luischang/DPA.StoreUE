@@ -64,5 +64,25 @@ namespace DPA.Store.DOMAIN.Core.Services
             return await _categoryRepository.Delete(id);
         }
 
+        public async Task<CategoryProductsDTO> GetCategoryProductsById(int id)
+        {
+            var category = await _categoryRepository.GetCategoryProductsById(id);
+
+            var categoryProductsDTO = new CategoryProductsDTO();
+            categoryProductsDTO.Id = category.Id;
+            categoryProductsDTO.Description = category.Description;
+
+            var products = new List<ProductListDTO>();
+            foreach (var cp in category.Product)
+            {
+                var product = new ProductListDTO();
+                product.Id = cp.Id;
+                product.Description = cp.Description;
+                products.Add(product);
+            }
+            categoryProductsDTO.Products = products;
+            return categoryProductsDTO;
+        }
+
     }
 }

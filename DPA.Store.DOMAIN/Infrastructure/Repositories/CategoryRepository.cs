@@ -70,5 +70,15 @@ namespace DPA.Store.DOMAIN.Infrastructure.Repositories
             return rows > 0;
         }
 
+        public async Task<Category> GetCategoryProductsById(int id)
+        {
+            var category = await _dbContext
+                            .Category
+                            .Where(c => c.Id == id)
+                            .Include(p=>p.Product)
+                            .FirstOrDefaultAsync();
+            return category;
+        }
+
     }
 }

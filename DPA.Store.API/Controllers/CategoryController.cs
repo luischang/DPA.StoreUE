@@ -27,11 +27,12 @@ namespace DPA.Store.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategoryById(int id)
+        public async Task<IActionResult> GetCategoryById(int id, [FromQuery] bool includeProducts)
         {
-            var category = await _categoryService.GetCategoryById(id);
-            if(category == null) return NotFound();
-            return Ok(category);
+            if (includeProducts)
+                return Ok(await _categoryService.GetCategoryProductsById(id));
+
+            return Ok(await _categoryService.GetCategoryById(id));
         }
 
         [HttpPost]

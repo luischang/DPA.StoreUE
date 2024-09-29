@@ -9,5 +9,6 @@ namespace DPA.Store.DOMAIN.Core.Interfaces
         Task<CategoryListDTO> GetCategoryById(int id);
         Task<int> Insert(CategoryDescriptionDTO categoryDTO);
         Task<bool> Update(CategoryListDTO categoryDTO);
+        Task<CategoryProductsDTO> GetCategoryProductsById(int id);
     }
 }
