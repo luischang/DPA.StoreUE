@@ -7,9 +7,11 @@ namespace DPA.Store.DOMAIN.Core.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IJWTService _jwtService;
+        public UserService(IUserRepository userRepository, IJWTService jwtService)
         {
             _userRepository = userRepository;
+            _jwtService = jwtService;
         }
 
 
@@ -21,7 +23,7 @@ namespace DPA.Store.DOMAIN.Core.Services
                 return null;
 
             //TODO: implementar token & email
-            var token = "";
+            var token = _jwtService.GenerateJWToken(user);
             var sendEmail = false;
 
             var userResponseAuth = new UserResponseAuthDTO()

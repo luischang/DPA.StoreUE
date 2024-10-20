@@ -2,6 +2,7 @@ using DPA.Store.DOMAIN.Core.Interfaces;
 using DPA.Store.DOMAIN.Core.Services;
 using DPA.Store.DOMAIN.Infrastructure.Data;
 using DPA.Store.DOMAIN.Infrastructure.Repositories;
+using DPA.Store.DOMAIN.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,8 @@ builder.Services.AddTransient<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddTransient<IFavoriteService, FavoriteService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddSharedInfrastructure(_config);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
