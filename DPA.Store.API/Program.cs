@@ -9,10 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var _config = builder.Configuration;
-var cnx = _config.GetConnectionString("DevConnection");
+// MSSQL Connection
+//var cnx = _config.GetConnectionString("DevConnection");
+//builder.Services
+//    .AddDbContext<StoreDbContext>
+//    (options => options.UseSqlServer(cnx));
+
+//MySql Connection
+var cnx = _config.GetConnectionString("DevConnectionMySql");
 builder.Services
     .AddDbContext<StoreDbContext>
-    (options => options.UseSqlServer(cnx));
+    (options => options.UseMySql(cnx, ServerVersion.AutoDetect(cnx)));
 
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
